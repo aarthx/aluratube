@@ -16,8 +16,9 @@ function HomePage() {
             <CSSReset />
             <div style={estiloDaHomePage}>
                 <Menu />
-                <Header />
-                <Timeline playlists={config.playlists} />
+                <Header banner={config.banner} />
+                <Timeline playlists={config.playlists}
+                    favorites={config.favorites} />
             </div>
         </>
     );
@@ -26,24 +27,32 @@ function HomePage() {
 export default HomePage;
 
 const StyleHeader = styled.div`
-    img {
+    
+    section img {
         width: 80px;
         height: 80px;
         border-radius: 50%;
     }
+
+    .banner {
+        width: 100vw;
+        height: 230px;
+        object-fit: cover;
+    }
+
     .user-info {
-        margin-top: 50px;
+        margin-top: 20px;
         display: flex;
         align-items: center;
         width: 100%;
-        padding: 16px 32px;
+        padding: 0px 32px;
         gap: 16px;
     }
 `;
-function Header() {
+function Header(props) {
     return (
         <StyleHeader>
-            {/*<img src="banner"></img>*/}
+            <img src={props.banner} className="banner"></img>
             <section className="user-info">
                 <img src={`https://github.com/${config.github}.png`}></img>
                 <div>
@@ -57,13 +66,14 @@ function Header() {
 
 function Timeline(props) {
     const playlistsNames = Object.keys(props.playlists);
+    const youtubers = props.favorites.youtubers
+
     // For --> Stetement
     // Retorno por expressao
     return (
         <StyledTimeline>
             {playlistsNames.map((playlistsName) => {
                 const videos = props.playlists[playlistsName];
-                console.log(videos)
                 return (
                     <section>
                         <h2>{playlistsName}</h2>
@@ -82,6 +92,21 @@ function Timeline(props) {
                     </section>
                 )
             })}
+            <h2>AluraTubes Favoritos</h2>
+            <section className="user-favorites">
+                {youtubers.map((youtubers) => {
+                    return (
+                        <div>
+                            <a href={youtubers.url}>
+                                <img src={youtubers.thumb} />
+                                <span>
+                                    {youtubers.title}
+                                </span>
+                            </a>
+                        </div>
+                    )
+                })}
+            </section>
         </StyledTimeline>
     )
 }

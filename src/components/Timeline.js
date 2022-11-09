@@ -44,4 +44,35 @@ export const StyledTimeline = styled.div`
       }
     }
   }
+  .user-favorites {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .user-favorites *{
+    padding: 0%;
+  }
+  .user-favorites div {
+    width: 150px;
+    display: flex;
+    overflow-x: hidden;
+    align-items: flex-start;
+    justify-content: start;
+  }
+
+  .user-favorites img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+  }
+
+    @media (max-width: 380px)
+  {
+    .user-favorites {
+      flex-direction: column;
+  }
+  }
 `;

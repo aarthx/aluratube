@@ -1,7 +1,22 @@
 {
+    "banner": "https://images.unsplash.com/photo-1565043534656-9385083a5871?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
     "name": "Arthur Augusto",
     "job": "Software Developer Student",
     "github": "aarthx",
+    "favorites": {
+        "youtubers": [
+            {
+                "title": "Ciência todo dia",
+                "url": "https://www.youtube.com/c/CienciaTodoDia",
+                "thumb": "https://yt3.ggpht.com/ytc/AMLnZu_I9SKhqEqL2YuI7M5-D4oVBtRfQB0lXVQ1FGsAAA=s88-c-k-c0x00ffffff-no-rj"
+            },
+            {
+                "title": "Alanzoka",
+                "url": "https://www.youtube.com/c/LivesAlanzoka",
+                "thumb": "https://yt3.ggpht.com/ytc/AMLnZu8ols4v6xJtNosUSC8Ebj2qgK_qDC7pLzB5UYg3=s88-c-k-c0x00ffffff-no-rj"
+            }
+        ]
+    },
     "playlists": {
         "jogos": [
             {
