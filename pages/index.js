@@ -1,3 +1,4 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
@@ -10,14 +11,19 @@ function HomePage() {
         flexDirection: "column",
         flex: 1,
     };
+    const [valorDoFiltro, setValorDoFiltro] = React.useState("")
 
     return (
         <>
             <CSSReset />
             <div style={estiloDaHomePage}>
-                <Menu />
-                <Header banner={config.banner} />
-                <Timeline playlists={config.playlists}
+                <Menu
+                    valorDoFiltro={valorDoFiltro}
+                    setValorDoFiltro={setValorDoFiltro} />
+                <Header />
+                <Timeline
+                    searchValue={valorDoFiltro}
+                    playlists={config.playlists}
                     favorites={config.favorites} />
             </div>
         </>
@@ -41,30 +47,35 @@ const StyleHeader = styled.div`
     }
 
     .user-info {
-        margin-top: 20px;
         display: flex;
         align-items: center;
         width: 100%;
         padding: 0px 32px;
         gap: 16px;
+        padding: 20px;
     }
 `;
+
+const StyledBanner = styled.div`
+    background-image: url(${({ bg }) => bg});
+    height: 230px;      
+`
 function Header(props) {
     return (
         <StyleHeader>
-            <img src={props.banner} className="banner"></img>
+            <StyledBanner bg={config.bg} />
             <section className="user-info">
                 <img src={`https://github.com/${config.github}.png`}></img>
                 <div>
                     <h2>{config.name}</h2>
                     <p>{config.job}</p>
                 </div>
-            </section>
-        </StyleHeader>
+            </section >
+        </StyleHeader >
     );
 }
 
-function Timeline(props) {
+function Timeline({ searchValue, ...props }) {
     const playlistsNames = Object.keys(props.playlists);
     const youtubers = props.favorites.youtubers
 
@@ -75,19 +86,24 @@ function Timeline(props) {
             {playlistsNames.map((playlistsName) => {
                 const videos = props.playlists[playlistsName];
                 return (
-                    <section>
+                    <section key={playlistsName}>
                         <h2>{playlistsName}</h2>
                         <div>
-                            {videos.map((video) => {
-                                return (
-                                    <a href={video.url}>
-                                        <img src={video.thumb} />
-                                        <span>
-                                            {video.title}
-                                        </span>
-                                    </a>
-                                )
-                            })}
+                            {videos.filter((video) => {
+                                const titleNormalized = video.title.toLowerCase()
+                                const searchValueNormalized = searchValue.toLowerCase()
+                                return titleNormalized.includes(searchValueNormalized)
+                            })
+                                .map((video) => {
+                                    return (
+                                        <a key={video.url} href={video.url}>
+                                            <img src={video.thumb} />
+                                            <span>
+                                                {video.title}
+                                            </span>
+                                        </a>
+                                    )
+                                })}
                         </div>
                     </section>
                 )
@@ -96,7 +112,7 @@ function Timeline(props) {
             <section className="user-favorites">
                 {youtubers.map((youtubers) => {
                     return (
-                        <div>
+                        <div key={youtubers.url}>
                             <a href={youtubers.url}>
                                 <img src={youtubers.thumb} />
                                 <span>
